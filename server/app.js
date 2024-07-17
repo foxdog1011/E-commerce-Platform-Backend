@@ -5,7 +5,7 @@ const bodyparser = requier('body-parse'); //導入body-parser模塊，用於解�
 const bcrypt = require('bcrypt'); //導入bcrypt模塊，用於對密碼進行加密和解密
 const users = require('./moels/users'); //導入users模塊，用於操作用戶數據庫
 const jwt = require('jsonwebtoken');
-
+const products = require('./models/products')   //導入products模塊，用於操作產品數據庫
 
 app.get('/', (req, res)=>{
     res.send('Hello World!');
@@ -35,4 +35,48 @@ app.post('/api/login', async (req, res) =>{
         res.status(401).send('Invaild credentials');
     }
     }); // 登錄用戶
-    
+
+app.post('/api/products/', (req, res) =>{
+    const { name, description, price, stock_quantity} = req.body;
+    const product = { id: products.length +1, name, description, price, stock_quantity};
+    products.push(product);
+    res.status(201).semd('Product added');
+}); // 添加產品
+
+app.get('/api/products', (req, res) => {
+    res.json(products);
+}); // 獲取所有產品
+
+app.get('/api/products/:id', (req, res) => {
+    const product = products.find(p =>p.id ==req.params.id);
+    if (product) {
+        res.json(product);
+    } else{
+        res.status(404).send('Product not found');
+    }
+});
+// 更新商品信息
+app.put('/api/products/:id', (req, res) => {
+    const { name, description, price, stock_quantity } = req.body;
+    const product = products.find(p => p.id == req.params.id);
+    if (product) {
+      product.name = name;
+      product.description = description;
+      product.price = price;
+      product.stock_quantity = stock_quantity;
+      res.send('Product updated');
+    } else {
+      res.status(404).send('Product not found');
+    }
+  });
+  
+  // 刪除商品
+  app.delete('/api/products/:id', (req, res) => {
+    const index = products.findIndex(p => p.id == req.params.id);
+    if (index !== -1) {
+      products.splice(index, 1);
+      res.send('Product deleted');
+    } else {
+      res.status(404).send('Product not found');
+    }
+  });

@@ -1,6 +1,8 @@
 import React from 'react';
 import Register from './components/Register';
 import Login from './components/Login';
+import AddProduct from './components/AddProduct';
+import ProductList from './components/ProductList';
 import logo from './logo.svg';
 import './App.css';
 
@@ -23,6 +25,8 @@ function App() {
       </header>
       <Register />
       <Login />
+      <AddProduct />
+      <ProductList />
     </div>
   );
 }

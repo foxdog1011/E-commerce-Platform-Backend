@@ -1,3 +1,3 @@
-const user = [];
+const user = [];// Array to store the user data
 
-module.exports = user;
+module.exports = user;// Export the user array
