@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Register from './components/Register';
 import Login from './components/Login';
 import AddProduct from './components/AddProduct';
@@ -8,11 +8,14 @@ import OrderList from './components/OrderList';
 import UpdateOrderStatus from './components/UpdateOrderStatus';
 import UpdateLogistics from './components/UpdateLogistics';
 import ViewLogistics from './components/ViewLogistics';
+import CreatePayment from './components/CreatePayment';
+import ViewPaymentStatus from './components/ViewPaymentStatus';
+import RefundPayment from './components/RefundPayment';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
-  const[userId, setUseriD] =useState(1);
+  const [userId, setUserId] = useState(1); // 修正 setUseriD 為 setUserId
   return (
     <div className="App">
       <header className="App-header">
@@ -38,6 +41,9 @@ function App() {
       <UpdateOrderStatus />
       <UpdateLogistics />
       <ViewLogistics />
+      <CreatePayment />
+      <ViewPaymentStatus />
+      <RefundPayment />
     </div>
   );
 }

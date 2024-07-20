@@ -10,11 +10,14 @@ function AddProduct() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const token = localStorage.getItem('token');
       const response = await axios.post('/api/products', {
         name,
         description,
         price,
         stock_quantity: stockQuantity
+      }, {
+        headers: { 'Authorization': `Bearer ${token}` }
       });
       alert(response.data);
     } catch (error) {

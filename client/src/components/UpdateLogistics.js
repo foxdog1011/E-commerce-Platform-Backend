@@ -24,7 +24,7 @@ function UpdateLogistics(){
             </div>
             <div>
                 <label>Status</label>
-                <inpt type = "text" value = {status} onChange = {(e) =>setStatus(e.target.value)} />
+                <input type = "text" value = {status} onChange = {(e) =>setStatus(e.target.value)} />
             </div>
             <button type = "submit">Update Status</button>
         </form>

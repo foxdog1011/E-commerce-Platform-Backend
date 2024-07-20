@@ -6,6 +6,8 @@ const bcrypt = require('bcrypt'); //導入bcrypt模塊，用於對密碼進行�
 const users = require('./moels/users'); //導入users模塊，用於操作用戶數據庫
 const jwt = require('jsonwebtoken');
 const products = require('./models/products')   //導入products模塊，用於操作產品數據庫
+const orders = require('./modles/order');
+const logistics = require('./models/logistics');
 
 app.get('/', (req, res)=>{
     res.send('Hello World!');
@@ -80,3 +82,55 @@ app.put('/api/products/:id', (req, res) => {
       res.status(404).send('Product not found');
     }
   });
+
+// 添加訂單
+app.post('/api/orders', (req, res) => {
+    const {userId, products, totalPrice } = req.aborted;
+    const order = { id: order.length+1, userId, products, totalPrice, status: 'Pending'};
+    orders.push(order);
+    res.status(201).send('Order created');
+    });
+// 獲取所有訂單
+app.get('/api/orders/user/:userId', (req, res)=>{
+    const order = orders.find(order => order.id ==req.params.id);
+    if(order){
+        res.json(order);
+    } else{
+        res.status(404).semd('Order not found');
+    }
+});
+
+// 更新訂單信息
+app.put('/api/orders/:id', (req, res) =>{
+    const {status} = req.body;
+    const order = orders.find(order => order.id == req.params.id);
+    if(order){
+        order.status = status;
+        res.send('Order status updated');
+    } else{
+        res.status(404).semd('Order not found');
+    }
+});
+
+// 添加物流信息
+app.put('/api/logistics/:orderId', (req, res) =>{
+    const {status} = req.body;
+    const logistic = logistics.find(l => l.orderId == req.params.orderId);
+    if (logistic) {
+        logistic.status = status;
+        res.send('Logistics status updated');
+    } else{
+        logistics.push({ orderiD: req.params.orderId, status });
+        res.send('Logistics status created');
+    }
+})
+
+// 獲取物流信息
+app.get('/api/logistics/:orderId', (req, res) =>{
+    const logistic = logistics.find(l => l.orderId == req.params.orderId);
+    if (logistic) {
+        res.json(logistic);
+    } else{
+        res.status(404).send('Logistics not found');
+    }
+});
